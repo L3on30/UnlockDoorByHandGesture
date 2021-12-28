@@ -29,7 +29,7 @@ for imPath in myList:
 #Setting background
 header = overlayList[0]
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 #Width = 1280
 cap.set(3, 1280)
 #Height = 720 
@@ -109,9 +109,6 @@ while True:
                     pw_r = 'Image/password_record.png'
                     img_r = 'Fail/fail_record.png'
                     cv2.imwrite(pw_r, imgInv)
-                    #cv2.imwrite(img_r, img)
-                    #Scan.pwd_scan(pw_r)
-                    # Read.read(pw_r)
                     break
                     #Export passwork screen to file png
             
@@ -131,18 +128,20 @@ cv2.destroyAllWindows()
 from read_img import image_text
 with open("PassLog/setpw.txt", 'r' , encoding='utf-8') as f:
     setpw = f.read(1)
-with open("PassLog/pw.txt", 'w' , encoding='utf-8') as f:
+with open("PassLog/enterpw.txt", 'w' , encoding='utf-8') as f:
     f.write(image_text)
-with open("PassLog/pw.txt", 'r' , encoding='utf-8') as f:
+with open("PassLog/enterpw.txt", 'r' , encoding='utf-8') as f:
     enterpw = f.readline(1)
-#print(setpw[:1])
-#print(enterpw[:1])
 
 if setpw == enterpw:
         print('Welcome home, sir! (^.^)')
         playsound(f'Audio/success.mp3')
+        with open("PassLog/pw.txt", 'w' , encoding='utf-8') as f:
+            f.write(enterpw)
 else:
         print('Wrong password, please try again!')
         playsound(f'Audio/fail.mp3')
         cv2.imwrite(img_r, img)
+        with open("PassLog/fail_pw.txt", 'w' , encoding='utf-8') as f:
+            f.write(image_text)
 keys = cv2.waitKey(1)

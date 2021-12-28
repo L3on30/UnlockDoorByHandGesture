@@ -24,15 +24,12 @@ overlayList = []
 for imPath in myList:
     image = cv2.imread(f'{folderPath}/{imPath}')
     overlayList.append(image)
-#print(len(overlayList))
 
 #Setting background
 header = overlayList[0]
 
-cap = cv2.VideoCapture(0)
-#Width = 1280
+cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 cap.set(3, 1280)
-#Height = 720 
 cap.set(4, 720)
 
 detector = htm.handDetector(detectionCon = 0.85)
@@ -58,17 +55,13 @@ while True:
     img = cv2.bitwise_or(img, imgCanvas)
 
     if len(lmList)!=0:
-        #print(lmList)
 
         #Index finger
         x1, y1 = lmList[8][1:]
         #Middle finger
         x2, y2 = lmList[12][1:]
 
-        #Checking finger (Up/Down)
         finger = detector.fingerUP()
-        #print(finger)
-
         #Drawing Mode
         if finger[1]==True and finger[2]==False:
             cv2.circle(img, (x1,y1), 15, drawColor, cv2.FILLED)
@@ -108,10 +101,8 @@ while True:
                     header = overlayList[0]
                     pw_r = 'Image/setpw_record.png'
                     img_r = 'Image/set_record.png'
-                    cv2.imwrite(pw_r, imgInv)
-                    cv2.imwrite(img_r, img)
-                    #Scan.pwd_scan(pw_r)
-                    # Read.read(pw_r)
+                    test_r = 'record.png'
+                    cv2.imwrite(test_r, imgInv)
                     break
                     #Export passwork screen to file png
             
@@ -121,22 +112,27 @@ while True:
     img[0:115, 0:1280] = header
     #img = cv2.addWeighted(img, 0.5, imgCanvas, 0.5, 0)
     cv2.imshow("Image",img)
-    #cv2.imshow("Canvas",imgCanvas)
-    #cv2.imshow("Inv",imgInv)
     key = cv2.waitKey(1)
     if key == ord('s'):
         break
 cv2.destroyAllWindows()
 
-imagepw = cv2.imread('Image/setpw_record.png', cv2.IMREAD_UNCHANGED)
+imagepw = cv2.imread('record.png', cv2.IMREAD_UNCHANGED)
 
 custom_config = r'-c tessedit_char_whitelist=ABCDEFGH0123456789 --psm 6 --oem 3'
 
 imagepw_text = pytesseract.image_to_string(imagepw, lang='eng', config=custom_config)
 
-with open("PassLog/setpw.txt", 'w' , encoding='utf-8') as f:
-    f.write(imagepw_text)
-with open("PassLog/setpw.txt", 'r' , encoding='utf-8') as f:
-    setpw = f.readline(1)
-print(("The password is: " + setpw[:1]))
-playsound(f'Audio/voice.mp3')
+spw = imagepw_text[:1]
+chars = "ABCDEFGH0123456789"
+charpw = list(chars)
+if spw in charpw:
+    with open("PassLog/setpw.txt", 'w' , encoding='utf-8') as f:
+        f.write(spw)
+    cv2.imwrite(pw_r, imgInv)
+    cv2.imwrite(img_r, img)
+    print(("The password is: " + spw[:1]))
+    playsound(f'Audio/voice.mp3')
+else:
+    print("Can not recognize the password, please try again!")
+    playsound(f'Audio/voice_fail.mp3')
