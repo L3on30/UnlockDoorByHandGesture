@@ -1,4 +1,4 @@
-# OpenDoorByHandGesture
+# UnlockDoorByHandGesture
 ## Project for Logical Design
 We don't need a doorknob to open a door! In this project, I will simulate unlock door by hand gesture via the camera of the computer. This door is kind of smart door which we can interact with it. We can set up the password and open it by drawing on the screen of camera.
 
