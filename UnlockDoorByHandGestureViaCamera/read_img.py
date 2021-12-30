@@ -14,8 +14,7 @@ dim = (width, height)
 
 resized_img = cv2.resize(image, dim, interpolation = cv2.INTER_AREA)
 
-cs_config = r'-c tessedit_char_whitelist=ABCDEFGH0123456789 --psm 6 --oem 3'
-#config='--psm 10 --oem 3 -c tessedit_char_whitelist=ABCD0123456789'
+cs_config = r'-c tessedit_char_whitelist=ABCDEFGH123456789 --psm 6 --oem 3'
 image_text = pytesseract.image_to_string(resized_img, lang='eng', config=cs_config)
 
 
