@@ -119,12 +119,12 @@ cv2.destroyAllWindows()
 
 imagepw = cv2.imread('record.png', cv2.IMREAD_UNCHANGED)
 
-custom_config = r'-c tessedit_char_whitelist=ABCDEFGH0123456789 --psm 6 --oem 3'
+custom_config = r'-c tessedit_char_whitelist=ABCDEFGH123456789 --psm 6 --oem 3'
 
 imagepw_text = pytesseract.image_to_string(imagepw, lang='eng', config=custom_config)
 
 spw = imagepw_text[:1]
-chars = "ABCDEFGH0123456789"
+chars = "ABCDEFGH123456789"
 charpw = list(chars)
 if spw in charpw:
     with open("PassLog/setpw.txt", 'w' , encoding='utf-8') as f:
