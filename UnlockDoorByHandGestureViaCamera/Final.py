@@ -51,6 +51,7 @@ while True:
     success, img = cap.read()
     #Flip camera 
     img = cv2.flip(img, 1)
+    cv2.imwrite('Fail/human.png', img)
     #Draw landmarks
     img = detector.findHands(img)
     lmList = detector.findPos(img, draw=False)
