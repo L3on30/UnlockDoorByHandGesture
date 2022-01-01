@@ -150,7 +150,7 @@ if check is True:
         f.write(spw)
     cv2.imwrite('Image/setpw_record.png', imgInv)
     cv2.imwrite('Image/set_record.png', img)
-    print(GREEN + ("The password is: " + spw))
+    print(GREEN + ("Creat password successfully. The password is: " + spw))
     playsound(f'Audio/voice.mp3')
     os.remove('record.png')
 else:
