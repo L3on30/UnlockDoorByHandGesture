@@ -134,7 +134,7 @@ from read_img import image_text
 with open("PassLog/setpw.txt", 'r' , encoding='utf-8') as f:
     setpw = f.read(4)
 with open("PassLog/enterpw.txt", 'w' , encoding='utf-8') as f:
-    f.write(image_text)
+    f.write(image_text[:4])
 with open("PassLog/enterpw.txt", 'r' , encoding='utf-8') as f:
     enterpw = f.read(4)
 
@@ -149,7 +149,7 @@ if setpw == enterpw:
     playsound(f'Audio/success.mp3')
     with open("PassLog/Log.txt", 'a+' , encoding='utf-8') as f:
         #f.seek(0,0)
-        f.writelines(enterpw + '\n')
+        #f.writelines(enterpw + '\n')
         f.writelines(dt + " - The door is opened!" + '\n' + '\n')
     os.remove('Image/password_record.png')
 else:
@@ -157,6 +157,6 @@ else:
     playsound(f'Audio/fail.mp3')
     cv2.imwrite('Fail/fail_record.png', img)
     with open("PassLog/Log.txt", 'a+' , encoding='utf-8') as f:
-        f.write(enterpw + '\n')
+        #f.write(enterpw + '\n')
         f.writelines(dt + " - Access denied!" + '\n' + '\n')
 keys = cv2.waitKey(1)
