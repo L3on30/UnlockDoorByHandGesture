@@ -14,6 +14,7 @@ Visual Studio Code
 Tesseract - OCR
 OpenCV
 Mediapine
+Telegram-bot
 ```
 
 ### Installing
